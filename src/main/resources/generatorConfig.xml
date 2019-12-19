@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration PUBLIC
+        "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <!--导入数据库配置文件-->
+    <properties resource="druid.properties"></properties>
+
+    <!--指定特定数据库的jdbc驱动jar包的位置,如果在pom的mybatis-generator插件配置了数据库的驱动依赖,就不用写了-->
+    <!--<classPathEntry location="F:\Java\maven_repository\mysql\mysql-connector-java\5.1.37\mysql-connector-java-5.1.37.jar"/>-->
+    <!--
+        targetRuntime
+            MyBatis3Simple：基础版CRUD
+            MyBatis3：复杂版CRUD
+     -->
+    <context id="simple" targetRuntime="MyBatis3Simple">
+
+        <commentGenerator>
+            <!-- 是否去除自动生成的注释 true：是 ： false:否 -->
+            <property name="suppressAllComments" value="true"/>
+            <property name="suppressDate" value="true"/>
+        </commentGenerator>
+
+        <!--jdbcConnection:指导连接哪个数据库-->
+        <jdbcConnection driverClass="${jdbc_driverClassName}"
+                        connectionURL="${jdbc_url}"
+                        userId="${jdbc_username}"
+                        password="${jdbc_password}"
+        />
+
+        <!-- 默认false，把JDBC DECIMAL 和 NUMERIC 类型解析为 Integer，为 true时把JDBC DECIMAL
+        和 NUMERIC 类型解析为java.math.BigDecimal -->
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+
+        <!--
+            javaModelGenerator:生成pojo
+                targetPackage：生成的pojo放在哪个包
+                targetProject：包在哪个路径下
+        -->
+        <javaModelGenerator targetPackage="com.lmh.bean" targetProject="./src/main/java"/>
+
+        <!--sqlMapGenerator:sql映射文件生成器,指定xml生成的地方-->
+        <sqlMapGenerator targetPackage="mybatis/mapper" targetProject="./src/main/resources"/>
+
+        <!--javaClientGenerator:dao接口生成-->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.lmh.dao" targetProject="./src/main/java"/>
+
+        <!--table：指定要逆向生成哪张表，
+            tableName：要生成的表名
+            domainObjectName：这个表对应的对象名-->
+        <table tableName="t_teacher" domainObjectName="Teacher"/>
+    </context>
+</generatorConfiguration>

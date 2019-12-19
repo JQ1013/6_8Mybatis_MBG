@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lmh.dao.TeacherMapper">
+
+    <resultMap id="BaseResultMap" type="com.lmh.bean.Teacher">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="teacher_name" jdbcType="VARCHAR" property="teacherName" />
+    <result column="class_name" jdbcType="VARCHAR" property="className" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="birthday" jdbcType="DATE" property="birthday" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_teacher
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.lmh.bean.Teacher">
+    insert into t_teacher (id, teacher_name, class_name, 
+      address, birthday)
+    values (#{id,jdbcType=INTEGER}, #{teacherName,jdbcType=VARCHAR}, #{className,jdbcType=VARCHAR}, 
+      #{address,jdbcType=VARCHAR}, #{birthday,jdbcType=DATE})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.lmh.bean.Teacher">
+    update t_teacher
+    set teacher_name = #{teacherName,jdbcType=VARCHAR},
+      class_name = #{className,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      birthday = #{birthday,jdbcType=DATE}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, teacher_name, class_name, address, birthday
+    from t_teacher
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, teacher_name, class_name, address, birthday
+    from t_teacher
+  </select>
+
+  <!--批量插入多个老师信息-->
+  <!--void insertBatch(List&amp;lt;Teacher&amp;gt; list,int num);-->
+  <insert id="insertBatch">
+    INSERT INTO t_teacher(teacher_name,class_name) VALUES
+    <foreach collection="teachers" item="teacher" separator=",">
+      (#{teacher.teacherName},#{teacher.className})
+    </foreach>
+  </insert>
+</mapper>
