@@ -5,6 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <!--hot_fix分支-->
+    <!--hot_fix分支测试-->
     <groupId>com.lmh</groupId>
     <artifactId>6_8Mybatis_MBG</artifactId>
     <version>1.0-SNAPSHOT</version>
